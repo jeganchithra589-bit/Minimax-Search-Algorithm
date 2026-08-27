@@ -1,6 +1,6 @@
 <h1>ExpNo 5 : Implement Minimax Search Algorithm for a Simple TIC-TAC-TOE game</h1> 
-<h3>Name:           </h3>
-<h3>Register Number/Staff Id:          </h3>
+<h3>Name:      Jegan P     </h3>
+<h3>Register Number/Staff Id:     212225240061     </h3>
 <H3>Aim:</H3>
 <p>
     Implement Minimax Search Algorithm for a Simple TIC-TAC-TOE game
@@ -112,5 +112,83 @@ end
 ![image](https://github.com/natsaravanan/19AI405FUNDAMENTALSOFARTIFICIALINTELLIGENCE/assets/87870499/a2acb6a1-ed8e-42e5-8968-fe805e4b0255)
 
 <hr>
+
+# program:
+
+```
+board = [' ' for _ in range(9)]
+
+def win(p):
+    combinations = [
+        (0,1,2), (3,4,5), (6,7,8),
+        (0,3,6), (1,4,7), (2,5,8),
+        (0,4,8), (2,4,6)
+    ]
+    return any(board[a] == board[b] == board[c] == p
+               for a,b,c in combinations)
+
+def minimax(maximize):
+    if win('O'):
+        return 1
+    if win('X'):
+        return -1
+    if ' ' not in board:
+        return 0
+
+    scores = []
+
+    for i in range(9):
+        if board[i] == ' ':
+            board[i] = 'O' if maximize else 'X'
+            scores.append(minimax(not maximize))
+            board[i] = ' '
+
+    return max(scores) if maximize else min(scores)
+
+def computer():
+    best = -10
+    move = 0
+
+    for i in range(9):
+        if board[i] == ' ':
+            board[i] = 'O'
+            score = minimax(False)
+            board[i] = ' '
+
+            if score > best:
+                best = score
+                move = i
+
+    board[move] = 'O'
+
+while True:
+    print(board[0], '|', board[1], '|', board[2])
+    print('--+---+--')
+    print(board[3], '|', board[4], '|', board[5])
+    print('--+---+--')
+    print(board[6], '|', board[7], '|', board[8])
+
+    pos = int(input("Enter position 1-9: ")) - 1
+    board[pos] = 'X'
+
+    if win('X'):
+        print("You Win!")
+        break
+
+    if ' ' not in board:
+        print("Draw!")
+        break
+
+    computer()
+
+    if win('O'):
+        print("Computer Wins!")
+        break
+```
+
+# output:
+
+<img width="990" height="785" alt="image" src="https://github.com/user-attachments/assets/61a1b357-8f1f-44d9-93cd-4826d71f3d8b" />
+
 <h2>Result:</h2>
 <p>Thus,Implementation of  Minimax Search Algorithm for a Simple TIC-TAC-TOE game wasa done successfully.</p>
